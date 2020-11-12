@@ -63,14 +63,14 @@ class Fritzhome(object):
         hashed = hashlib.md5(to_hash).hexdigest()
         return "{0}-{1}".format(challenge, hashed)
 
-    def _aha_request(self, cmd, ain=None, param=None, rf=str):
+    # def _aha_request(self, cmd, ain=None, param=None, rf=str, **kwargs):
+    def _aha_request(self, cmd, ain=None, rf=str, **kwargs):
         """Send an AHA request."""
         url = self.get_prefixed_host() + "/webservices/homeautoswitch.lua"
         params = {"switchcmd": cmd, "sid": self._sid}
-        if param:
-            params["param"] = param
         if ain:
             params["ain"] = ain
+        params.update(kwargs)
 
         plain = self._request(url, params)
         if plain == "inval":

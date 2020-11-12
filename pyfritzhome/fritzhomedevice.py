@@ -285,6 +285,10 @@ class FritzhomeDevice(object):
         except (Exception, ValueError):
             pass
 
+    def get_alert_state(self):
+        """Get the alert state."""
+        return self._fritz.get_alert_state(self.ain)
+
     # Repeater
     @property
     def has_repeater(self):

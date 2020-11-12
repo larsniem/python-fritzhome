@@ -196,6 +196,9 @@ class FritzhomeDevice(object):
 
         self.set_target_temperature(value)
 
+    def set_window_open(self, active, minutes=10.0):
+        self._fritz.set_window_open(self.ain, active, minutes)
+
     # Switch
     @property
     def has_switch(self):

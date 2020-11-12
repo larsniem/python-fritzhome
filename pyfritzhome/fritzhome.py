@@ -7,6 +7,7 @@ import logging
 from xml.etree import ElementTree
 
 from requests import Session
+from time import time
 
 from .errors import InvalidError, LoginError
 from .fritzhomedevice import FritzhomeDevice
@@ -197,6 +198,11 @@ class Fritzhome(object):
         elif param > max(range(16, 56)):
             param = 254
         self._aha_request("sethkrtsoll", ain=ain, param=int(param))
+
+    def set_window_open(self, ain, active, minutes=10.0):
+        """Set the window open state of thermostate"""
+        end_time = int(time()) + int(60*minutes) if active else 0
+        self._aha_request("sethkrwindowopen", ain=ain, endtimestamp=end_time)
 
     def get_comfort_temperature(self, ain):
         """Get the thermostate comfort temperature."""
